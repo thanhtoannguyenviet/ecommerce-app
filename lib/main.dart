@@ -1,4 +1,5 @@
 import 'package:ecommerceappflutter/screens/home.dart';
+import 'package:ecommerceappflutter/screens/login.dart';
 import 'package:ecommerceappflutter/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +23,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          '/': (context) => const SignUp(),
+          '/': (context) => const Login(),
         },
+        theme:ThemeData(
+          primaryColor: Colors.blueAccent,
+          visualDensity: VisualDensity.adaptivePlatformDensity
+        ),
+
       ),
     );
   }

@@ -1,5 +1,6 @@
 
 import 'package:ecommerceappflutter/common/validate.dart';
+import 'package:ecommerceappflutter/screens/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -69,10 +70,9 @@ class _SignUpState extends State<SignUp>{
                       ),
                       TextFormField(
                         validator: (value){
-                          RegExp regExp = new RegExp(Validate.emailValidate);
                           if(value == ""){
                             return "Please fill email";
-                          }else if(!regExp.hasMatch(value!)){
+                          }else if(!Validate.checkValidate(Validate.emailValidate, value)){
                             return "Email is invalid";
                           }
                         },
@@ -135,7 +135,17 @@ class _SignUpState extends State<SignUp>{
                       Row(
                         children: [
                           const Text("I have Already An Account!"),
-                          GestureDetector(child:Text("Login",style: TextStyle(color: Colors.cyan),))
+                          GestureDetector(
+                              child:const Text("Login",style: TextStyle(color: Colors.cyan),),
+                              onTap: (){
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (ctx)=>const Login()
+                                  )
+                              );
+                            },
+
+                          )
                         ],
                       )
                     ],
