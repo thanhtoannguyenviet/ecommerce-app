@@ -1,8 +1,11 @@
 
 import 'package:ecommerceappflutter/common/validate.dart';
 import 'package:ecommerceappflutter/screens/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SignUp extends StatefulWidget{
   const SignUp({Key? key}) : super(key: key);
@@ -12,11 +15,18 @@ class SignUp extends StatefulWidget{
 }
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 bool obserText =true;
+String username="",password="";
 class _SignUpState extends State<SignUp>{
-  void validation(){
+  void validation() async{
     final FormState? _form = _formKey.currentState;
     if(_form!.validate()){
-      print("Yes");
+      try{
+        var rs = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: username,password: password);
+        print(rs.user!.uid);
+      }
+      on PlatformException catch(e){
+        print(e.message.toString());
+      }
     }
     else {
       print("No");
@@ -60,6 +70,11 @@ class _SignUpState extends State<SignUp>{
                             return "Username is too short";
                           }
                         },
+                        onChanged: (value){
+                          setState(() {
+                            username = value;
+                          });
+                        },
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: "Username",
@@ -72,9 +87,10 @@ class _SignUpState extends State<SignUp>{
                         validator: (value){
                           if(value == ""){
                             return "Please fill email";
-                          }else if(!Validate.checkValidate(Validate.emailValidate, value)){
-                            return "Email is invalid";
                           }
+                          // else if(!Validate.checkValidate(Validate.emailValidate, value)){
+                          //   return "Email is invalid";
+                          // }
                         },
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -90,6 +106,11 @@ class _SignUpState extends State<SignUp>{
                           if(value!.length<8){
                             return "Password is too short";
                           }
+                        },
+                        onChanged: (value){
+                          setState(() {
+                            password = value;
+                          });
                         },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),

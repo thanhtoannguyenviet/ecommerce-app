@@ -1,12 +1,12 @@
-import 'package:ecommerceappflutter/screens/home.dart';
 import 'package:ecommerceappflutter/screens/login.dart';
-import 'package:ecommerceappflutter/screens/signup.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'model/catalog.dart';
 
-void main()  {
+void main() async {
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
